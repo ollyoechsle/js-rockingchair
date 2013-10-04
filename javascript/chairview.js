@@ -54,8 +54,11 @@
             model = this.viewModel;
 
         this.clear();
-        ctx.stroke('#000000');
-        ctx.fillText(model.coordinates(), 20, 20)
+
+        model.objects.forEach(function(object) {
+            object.render(ctx);
+        });
+
     };
 
     /**

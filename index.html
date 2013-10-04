@@ -13,10 +13,13 @@
 <h1>Rocking Chair</h1>
 
 <div>
-    <input data-bind="value: coordinates"/>
+    <h2>Point 1A</h2>
+    (<input data-bind="value: point1A.x"/>, <input data-bind="value: point1A.y"/>)
+    <h2>Point 1B</h2>
+    (<input data-bind="value: point1B.x"/>, <input data-bind="value: point1B.y"/>)
 </div>
 
-<canvas data-bind="rockingChair: coordinates" width="200" height="200"></canvas>
+<canvas data-bind="rockingChair: ''" width="200" height="200"></canvas>
 
 </body>
 </html>

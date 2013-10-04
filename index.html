@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rocking Chair</title>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/2.3.0/knockout-min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="javascript/chairview.js"></script>
+    <script src="javascript/ko.bindings.rockingchair.js"></script>
+    <script src="javascript/viewmodel.js"></script>
+</head>
+<body>
+
+<h1>Rocking Chair</h1>
+
+<div>
+    <input data-bind="value: coordinates"/>
+</div>
+
+<canvas data-bind="rockingChair: coordinates" width="200" height="200"></canvas>
+
+</body>
+</html>

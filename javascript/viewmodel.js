@@ -10,13 +10,42 @@
         }
     }
 
+    function BracketViewModel(hangingPoint, length) {
+        var self = this;
+
+        self.angle = 0;
+
+        var endPoint = {
+            x: function() {
+                return hangingPoint.x() + (Math.cos(self.angle) * length);
+            },
+            y: function() {
+                return hangingPoint.y() + (Math.sin(self.angle) * length);
+            }
+        };
+
+        self.render = function(ctx) {
+
+            ctx.beginPath();
+            ctx.moveTo(hangingPoint.x(), hangingPoint.y());
+            ctx.lineTo(endPoint.x(), endPoint.y());
+            ctx.stroke();
+
+            self.angle++;
+
+        }
+    }
+
     function RockingChairViewModel() {
         var self = this;
 
-        self.point1A = new PointViewModel(10, 10);
-        self.point1B = new PointViewModel(10, 10);
+        self.hangingPoint1 = new PointViewModel(10, 10);
+        self.hangingPoint2 = new PointViewModel(50, 10);
 
-        self.objects = [self.point1A, self.point1B];
+        self.bar1 = new BracketViewModel(self.hangingPoint1, 20);
+        self.bar2 = new BracketViewModel(self.hangingPoint2, 20);
+
+        self.objects = [self.hangingPoint1, self.hangingPoint2, self.bar1, self.bar2];
 
     }
 

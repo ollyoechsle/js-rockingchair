@@ -14,6 +14,7 @@
         var self = this;
 
         self.angle = Math.PI / 2;
+        self.delta = 1;
 
         self.endPoint = {
             x: function () {
@@ -51,8 +52,8 @@
     function RockingChairViewModel() {
         var self = this;
 
-        self.hangingPoint1 = new PointViewModel(10, 10);
-        self.hangingPoint2 = new PointViewModel(50, 10);
+        self.hangingPoint1 = new PointViewModel(50, 50);
+        self.hangingPoint2 = new PointViewModel(100, 50);
 
         self.bracket1 = new BracketViewModel(self.hangingPoint1, 20);
         self.bracket2 = new BracketViewModel(self.hangingPoint2, 20);
@@ -60,6 +61,11 @@
         self.bar1 = new BarViewModel(self.bracket1, self.bracket2);
 
         self.objects = [self.hangingPoint1, self.hangingPoint2, self.bracket1, self.bracket2, self.bar1];
+
+        self.update = function() {
+            var delta = self.bracket1.delta;
+            self.bracket1.angle += delta / 10;
+        }
 
     }
 

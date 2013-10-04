@@ -59,6 +59,8 @@
             object.render(ctx);
         });
 
+        model.update();
+
     };
 
     /**

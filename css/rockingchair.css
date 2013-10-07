@@ -1,0 +1,9 @@
+input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    width: 30px;
+}
+
+input:focus {
+    border: 1px solid green;
+}

@@ -7,6 +7,7 @@
     <script src="javascript/chairview.js"></script>
     <script src="javascript/ko.bindings.rockingchair.js"></script>
     <script src="javascript/viewmodel.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/rockingchair.css" />
 </head>
 <body>
 
@@ -14,9 +15,9 @@
 
 <div>
     <h2>Hanging Point 1</h2>
-    (<input data-bind="value: leftHangingPoint.x"/>, <input data-bind="value: leftHangingPoint.y"/>)
+    (<input data-bind="value: leftHangingPoint.x" type="number"/>, <input data-bind="value: leftHangingPoint.y" type="number"/>)
     <h2>Hanging Point 2</h2>
-    (<input data-bind="value: rightHangingPoint.x"/>, <input data-bind="value: rightHangingPoint.y"/>)
+    (<input data-bind="value: rightHangingPoint.x" type="number"/>, <input data-bind="value: rightHangingPoint.y" type="number"/>)
 </div>
 
 <canvas data-bind="rockingChair: ''" width="200" height="200"></canvas>

@@ -107,12 +107,38 @@
     function BarViewModel(point0, point1) {
         var self = this;
 
+        var lines = [];
+
         self.render = function (ctx) {
 
+            var x0 = point0.x(),
+                y0 = point0.y(),
+                x1 = point1.x(),
+                y1 = point1.y();
+
             ctx.beginPath();
-            ctx.moveTo(point0.x(), point0.y());
-            ctx.lineTo(point1.x(), point1.y());
+            ctx.moveTo(x0, y0);
+            ctx.lineTo(x1, y1);
             ctx.stroke();
+
+            lines.push({
+                           x: x0 + ((x1 - x0) / 2),
+                           y: y0 + ((y1 - y0) / 2)
+                       });
+
+            // limit to 20 lines
+            if (lines.length > 40) {
+                lines.splice(0, 1);
+            }
+
+            ctx.fillStyle = '#ff0000';
+            lines.forEach(function(point, i) {
+                ctx.globalAlpha = (i / lines.length);
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, 1, 0, 2 * Math.PI, false);
+                ctx.fill();
+            });
+            ctx.globalAlpha = 1.0;
 
         };
 
@@ -176,7 +202,7 @@
             if (angle > maxAngle || angle < minAngle) {
                 delta *= -1;
             }
-            angle += delta / 10;
+            angle += delta / 20;
         }
 
     }

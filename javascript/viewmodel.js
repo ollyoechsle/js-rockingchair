@@ -203,12 +203,10 @@
 
             for (var angle = MIN_ANGLE; angle <= MAX_ANGLE; angle += 0.05) {
 
-                var rightEndPoint = {
-                    x: self.rightHangingPoint.x() + (Math.cos(angle)
-                        * self.rightBracketLength()),
-                    y: self.rightHangingPoint.y() + (Math.sin(angle)
-                        * self.rightBracketLength())
-                };
+                var rightEndPoint = new FixedPointViewModel(
+                            self.rightHangingPoint.x() + (Math.cos(angle) * self.rightBracketLength()),
+                            self.rightHangingPoint.y() + (Math.sin(angle) * self.rightBracketLength())
+                );
 
                 var intersectionPoints = intersection(rightEndPoint,
                                                       self.barLength(),

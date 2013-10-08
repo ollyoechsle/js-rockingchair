@@ -14,4 +14,14 @@
         }
     };
 
+    ko.bindingHandlers.degrees = {
+
+        update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            var radians = ko.utils.unwrapObservable(valueAccessor()),
+                degrees = radians * (180 / Math.PI);
+            jQuery(element).html(degrees.toFixed(1) + "&deg;");
+        }
+
+    }
+
 })(window.ko);

@@ -144,11 +144,41 @@
 
     }
 
+    function OffsetPoint(point0, point1, reference, ox, oy) {
+        var self = this,
+            offsetDistance = Math.sqrt((ox * ox) + (oy * oy));
+
+        self.x = function () {
+
+            var x0 = point0.x(),
+                y0 = point0.y(),
+                dx = point1.x() - x0,
+                dy = point1.y() - y0,
+                hyp = Math.sqrt((dx * dx) + (dy * dy));
+
+            return reference.x() + (offsetDistance * (dy / hyp));
+
+        };
+
+        self.y = function () {
+
+            var x0 = point0.x(),
+                y0 = point0.y(),
+                dx = point1.x() - x0,
+                dy = point1.y() - y0,
+                hyp = Math.sqrt((dx * dx) + (dy * dy));
+
+            return reference.y() - (offsetDistance * (dx / hyp));
+
+        };
+
+    }
+
     function RockingChairViewModel() {
         var self = this;
 
         // the bracket on the right
-        self.rightHangingPoint = new FixedPointViewModel(100, 50);
+        self.rightHangingPoint = new FixedPointViewModel(100, 100);
         self.rightBracketLength = ko.observable(20);
 
         var angle = 0,
@@ -166,10 +196,10 @@
 
         self.rightBracket = new BracketViewModel(self.rightHangingPoint, rightBracketEndPoint);
 
-        self.barLength = ko.observable(50);
+        self.barLength = ko.observable(57);
 
         // the bracket on the left
-        self.leftHangingPoint = new FixedPointViewModel(50, 50);
+        self.leftHangingPoint = new FixedPointViewModel(50, 100);
         self.leftBracketLength = ko.observable(20);
         var leftBracketEndPoint = new DynamicPointViewModel(
             function () {
@@ -191,7 +221,17 @@
 
         self.leftBracket = new BracketViewModel(self.leftHangingPoint, leftBracketEndPoint);
 
-        self.objects = [self.leftBracket, self.rightBracket, self.bar1];
+        var seat = new BarViewModel(
+            new OffsetPoint(leftBracketEndPoint, rightBracketEndPoint, leftBracketEndPoint, -10, -5),
+            new OffsetPoint(leftBracketEndPoint, rightBracketEndPoint, rightBracketEndPoint, +10, -5)
+        );
+
+        var back = new BarViewModel(
+                    new OffsetPoint(leftBracketEndPoint, rightBracketEndPoint, leftBracketEndPoint, -10, -5),
+                    new OffsetPoint(leftBracketEndPoint, rightBracketEndPoint, leftBracketEndPoint, -10, -80)
+                );
+
+        self.objects = [self.leftBracket, self.rightBracket, self.bar1, seat, back];
 
         var MIN_ANGLE = 0,
             MAX_ANGLE = +Math.PI;
@@ -204,8 +244,8 @@
             for (var angle = MIN_ANGLE; angle <= MAX_ANGLE; angle += 0.05) {
 
                 var rightEndPoint = new FixedPointViewModel(
-                            self.rightHangingPoint.x() + (Math.cos(angle) * self.rightBracketLength()),
-                            self.rightHangingPoint.y() + (Math.sin(angle) * self.rightBracketLength())
+                    self.rightHangingPoint.x() + (Math.cos(angle) * self.rightBracketLength()),
+                    self.rightHangingPoint.y() + (Math.sin(angle) * self.rightBracketLength())
                 );
 
                 var intersectionPoints = intersection(rightEndPoint,

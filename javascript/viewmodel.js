@@ -132,7 +132,7 @@
             }
 
             ctx.fillStyle = '#ff0000';
-            lines.forEach(function(point, i) {
+            lines.forEach(function (point, i) {
                 ctx.globalAlpha = (i / lines.length);
                 ctx.beginPath();
                 ctx.arc(point.x, point.y, 1, 0, 2 * Math.PI, false);
@@ -166,7 +166,7 @@
 
         self.rightBracket = new BracketViewModel(self.rightHangingPoint, rightBracketEndPoint);
 
-        var barLength = ko.observable(50);
+        self.barLength = ko.observable(50);
 
         // the bracket on the left
         self.leftHangingPoint = new FixedPointViewModel(50, 50);
@@ -174,7 +174,8 @@
         var leftBracketEndPoint = new DynamicPointViewModel(
             function () {
 
-                var intersectionPoints = intersection(rightBracketEndPoint, barLength(),
+                var intersectionPoints = intersection(rightBracketEndPoint,
+                                                      self.barLength(),
                                                       self.leftHangingPoint,
                                                       self.leftBracketLength());
 
@@ -192,17 +193,66 @@
 
         self.objects = [self.leftBracket, self.rightBracket, self.bar1];
 
-        var minAngle = 0,
-            maxAngle = +Math.PI;
+        var MIN_ANGLE = 0,
+            MAX_ANGLE = +Math.PI;
 
-        angle = (maxAngle + minAngle) / 2;
+        angle = (MAX_ANGLE + MIN_ANGLE) / 2;
         delta = +1;
 
+        self.minAngle = ko.computed(function () {
+
+            for (var angle = MIN_ANGLE; angle <= MAX_ANGLE; angle += 0.05) {
+
+                var rightEndPoint = {
+                    x: self.rightHangingPoint.x() + (Math.cos(angle)
+                        * self.rightBracketLength()),
+                    y: self.rightHangingPoint.y() + (Math.sin(angle)
+                        * self.rightBracketLength())
+                };
+
+                var intersectionPoints = intersection(rightEndPoint,
+                                                      self.barLength(),
+                                                      self.leftHangingPoint,
+                                                      self.leftBracketLength());
+
+                if (intersectionPoints) {
+                    return angle;
+                }
+
+            }
+
+        });
+
+        self.maxAngle = ko.computed(function () {
+
+            for (var angle = MAX_ANGLE; angle >= MIN_ANGLE; angle -= 0.05) {
+
+                var rightEndPoint = new FixedPointViewModel(
+                    self.rightHangingPoint.x() + (Math.cos(angle) * self.rightBracketLength()),
+                    self.rightHangingPoint.y() + (Math.sin(angle) * self.rightBracketLength())
+                );
+
+                var intersectionPoints = intersection(rightEndPoint,
+                                                      self.barLength(),
+                                                      self.leftHangingPoint,
+                                                      self.leftBracketLength());
+
+                if (intersectionPoints) {
+                    return angle;
+                }
+
+            }
+
+        });
+
         self.update = function () {
-            if (angle > maxAngle || angle < minAngle) {
+
+            if (angle > self.maxAngle() || angle < self.minAngle()) {
                 delta *= -1;
             }
+
             angle += delta / 20;
+
         }
 
     }

@@ -196,7 +196,7 @@
 
         self.rightBracket = new BracketViewModel(self.rightHangingPoint, rightBracketEndPoint);
 
-        self.barLength = ko.observable(57);
+        self.barLength = ko.observable(50);
 
         // the bracket on the left
         self.leftHangingPoint = new FixedPointViewModel(50, 100);

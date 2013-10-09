@@ -1,7 +1,21 @@
+body {
+    font-size: 10px;
+    font-family: arial, sans-serif;
+}
+
+h2 {
+    font-size: 12px;
+}
+
+.settings-container {
+    float: left;
+    margin-right: 20px;
+}
+
 input {
     padding: 5px;
     border: 1px solid #ccc;
-    width: 30px;
+    width: 50px;
 }
 
 input:focus {

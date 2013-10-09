@@ -7,4 +7,4 @@ This is a very simple simulator which displays the motion of a rocking chair, al
 The UI is managed by KnockoutJS, and the simulation is rendered using canvas.
 
 Here's a demo:
-https://htmlpreview.github.com/ollyoechsle/js-rockingchair/master/demo.html
+http://htmlpreview.github.io/?https://raw.github.com/ollyoechsle/js-rockingchair/master/demo.html
